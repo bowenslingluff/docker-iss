@@ -23,10 +23,14 @@ logger = logging.getLogger(__name__)
 
 # core fcn
 def get_iss_location():
-    url = "http://api.open-notify.org/iss-now.json"
+    url1 = "http://api.open-notify.org/iss-now.json"
+    url2 = "http://api.open-notify.org/astros.json"
     try:
-        response = requests.get(url)
-        r = response.json()
+        response_iss = requests.get(url1)
+        r = response_iss.json()
+
+        response_astros = requests..get(url2)
+        astros = response_astros.json()
 
         # fetch values from response
         timestamp = r['timestamp']
@@ -42,6 +46,13 @@ def get_iss_location():
         logger.info("Timestamp: " + dtime)
         logger.info("Longitude: " + long)
         logger.info("Latitude: " + lat)
+
+        for person in astros["people"]:
+            craft = person["craft"]
+            name = person["name"]
+            logger.info("Craft: " + craft)
+            logger.info("Person: " + name)
+
 
         # write output to mongo db
         write_to_mongo(dtime, long, lat)
