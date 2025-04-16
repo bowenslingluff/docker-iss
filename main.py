@@ -29,7 +29,7 @@ def get_iss_location():
         response_iss = requests.get(url1)
         r = response_iss.json()
 
-        response_astros = requests..get(url2)
+        response_astros = requests.get(url2)
         astros = response_astros.json()
 
         # fetch values from response
